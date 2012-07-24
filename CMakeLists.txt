@@ -14,7 +14,8 @@ add_executable(
     GoogleMockGen_AT
     test/acceptance/Interface1Test.cpp
     test/acceptance/Interface2Test.cpp
-    test/acceptance/InterfaceWithArgsTest.cpp)
+    test/acceptance/InterfaceWithArgsTest.cpp
+    test/acceptance/HeaderGuardsTest.cpp)
 
 add_dependencies(GoogleMockGen_AT Mocks)
 

@@ -3,10 +3,24 @@
 
 bool MockGenerator::HandleTopLevelDecl(clang::DeclGroupRef declGroup)
 {
+    beginHeaderGuard();
     genIncludes();
     genMock(dyn_cast<CXXRecordDecl>(*declGroup.begin()));
+    endHeaderGuard();
     return true;
 }
+
+void MockGenerator::beginHeaderGuard()
+{
+    outs() << "#ifndef " << headerGuardName << "\n";
+    outs() << "#define " << headerGuardName << "\n";
+}
+
+void MockGenerator::endHeaderGuard()
+{
+    outs() << "#endif /* " << headerGuardName << " */";
+}
+
 void MockGenerator::genIncludes()
 {
     outs() << "#include \"" << headerPath << "\"\n";
@@ -25,7 +39,7 @@ void MockGenerator::genMock(const CXXRecordDecl *classDecl)
             genMethodMock(*method);
         }
     }
-    outs() << "};";
+    outs() << "};\n\n";
 }
 void MockGenerator::genMethodMock(const CXXMethodDecl* method)
 {
@@ -41,5 +55,11 @@ void MockGenerator::genMethodMock(const CXXMethodDecl* method)
     }
     
     outs() << "));\n";
+}
+
+std::string MockGenerator::toupper(std::string s)
+{
+    std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(&std::toupper));
+    return s;
 }
 
