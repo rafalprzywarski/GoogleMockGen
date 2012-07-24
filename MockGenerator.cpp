@@ -16,10 +16,13 @@ void MockGenerator::genIncludes()
 
 void MockGenerator::genMock(const CXXRecordDecl *classDecl)
 {
-    const FunctionDecl *method = dyn_cast<FunctionDecl>(*classDecl->method_begin());
     outs() << "struct " << className << "Mock : " << className << "\n";
     outs() << "{\n";
-    outs() << "    MOCK_METHOD" << method->param_size() << "(" << method->getNameAsString() << ", " << method->getCallResultType().getAsString() << "());\n";
+    genMethodMock(dyn_cast<FunctionDecl>(*classDecl->method_begin()));
     outs() << "};";
+}
+void MockGenerator::genMethodMock(const FunctionDecl* method)
+{
+    outs() << "    MOCK_METHOD" << method->param_size() << "(" << method->getNameAsString() << ", " << method->getCallResultType().getAsString() << "());\n";
 }
 

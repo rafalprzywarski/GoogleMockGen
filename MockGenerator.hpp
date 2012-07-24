@@ -22,6 +22,7 @@ private:
 
     void genIncludes();
     void genMock(const CXXRecordDecl *classDecl);
+    void genMethodMock(const FunctionDecl *method);
 };
 
 #endif // MOCKGENERATOR_HPP
