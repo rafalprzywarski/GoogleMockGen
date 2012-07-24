@@ -18,10 +18,16 @@ void MockGenerator::genMock(const CXXRecordDecl *classDecl)
 {
     outs() << "struct " << className << "Mock : " << className << "\n";
     outs() << "{\n";
-    genMethodMock(dyn_cast<FunctionDecl>(*classDecl->method_begin()));
+    for (CXXRecordDecl::method_iterator method = classDecl->method_begin(); method != classDecl->method_end(); ++method)
+    {
+        if (method->isPure())
+        {
+            genMethodMock(*method);
+        }
+    }
     outs() << "};";
 }
-void MockGenerator::genMethodMock(const FunctionDecl* method)
+void MockGenerator::genMethodMock(const CXXMethodDecl* method)
 {
     outs() << "    MOCK_METHOD" << method->param_size() << "(" << method->getNameAsString() << ", " << method->getCallResultType().getAsString() << "());\n";
 }

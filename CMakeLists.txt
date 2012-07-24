@@ -10,7 +10,7 @@ add_dependencies(Mocks GoogleMockGen)
 
 add_library(gmock gmock-1.6.0/fused-src/gmock-gtest-all.cc gmock-1.6.0/fused-src/gmock_main.cc)
 
-add_executable(GoogleMockGen_AT test/acceptance/Interface1Test.cpp)
+add_executable(GoogleMockGen_AT test/acceptance/Interface1Test.cpp test/acceptance/Interface2Test.cpp)
 add_dependencies(GoogleMockGen_AT Mocks)
 
 target_link_libraries(GoogleMockGen_AT gmock pthread)
