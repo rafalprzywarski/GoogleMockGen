@@ -29,6 +29,17 @@ void MockGenerator::genMock(const CXXRecordDecl *classDecl)
 }
 void MockGenerator::genMethodMock(const CXXMethodDecl* method)
 {
-    outs() << "    MOCK_METHOD" << method->param_size() << "(" << method->getNameAsString() << ", " << method->getCallResultType().getAsString() << "());\n";
+    outs() << "    MOCK_METHOD" << method->param_size() << "("
+           << method->getNameAsString() << ", "
+           << method->getCallResultType().getAsString(printingPolicy) << "(";
+
+    for (CXXMethodDecl::param_const_iterator param = method->param_begin(); param != method->param_end(); ++param)
+    {
+        if (param != method->param_begin())
+            outs() << ", ";
+        outs() << (*param)->getType().getAsString(printingPolicy);
+    }
+    
+    outs() << "));\n";
 }
 
