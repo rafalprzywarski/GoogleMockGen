@@ -3,3 +3,6 @@
 */
 configure.out
 !.gitignore
+!test
+!test/*
+test/acceptance/*Mock.hpp

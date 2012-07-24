@@ -19,6 +19,7 @@ protected:
 
     bool ParseArgs(const CompilerInstance &CI, const std::vector<std::string>& args)
     {
+        llvm::outs() << "#include \"Interface1.hpp\"\n#include <gmock/gmock.h>\nstruct Interface1Mock : Interface1 { MOCK_METHOD0(f, void()); };";
         return true;
     }
 };
