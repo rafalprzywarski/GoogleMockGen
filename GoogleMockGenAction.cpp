@@ -1,8 +1,5 @@
 #include "clang/Frontend/FrontendPluginRegistry.h"
-#include "clang/AST/ASTConsumer.h"
-#include "clang/AST/AST.h"
-#include "clang/Frontend/CompilerInstance.h"
-#include "llvm/Support/raw_ostream.h"
+#include "MockGenerator.hpp"
 
 using namespace clang;
 
@@ -14,14 +11,20 @@ class GoogleMockGenAction : public PluginASTAction
 protected:
     ASTConsumer *CreateASTConsumer(CompilerInstance &CI, llvm::StringRef)
     {
-        return 0;
+        return new MockGenerator(headerPath, className, llvm::outs);
     }
 
     bool ParseArgs(const CompilerInstance &CI, const std::vector<std::string>& args)
     {
-        llvm::outs() << "#include \"Interface1.hpp\"\n#include <gmock/gmock.h>\nstruct Interface1Mock : Interface1 { MOCK_METHOD0(f, void()); };";
+        headerPath = args[0];
+        className = args[1];
         return true;
     }
+
+private:
+
+    std::string headerPath;
+    std::string className;
 };
 
 }
