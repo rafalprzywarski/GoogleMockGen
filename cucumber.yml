@@ -1,0 +1,3 @@
+default: --tag @done -t progress
+wip: --tag @wip -t progress
+all: -f pretty
