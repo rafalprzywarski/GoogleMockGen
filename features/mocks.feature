@@ -1,23 +1,23 @@
 Feature: As a developer I want to automatically generate Mock Objects for classes so I don't have to write them manually
 
+    @done
     Scenario: Output file name
         Given header file with:
             """
-            namespace X { namespace Y {
             class Simple { };
-            } }
             """
-        When I generate a mock for class "X::Y::Simple"
+        When I generate a mock for class "Simple"
         Then file "SimpleMock.hpp" should exist
         
+    @done
     Scenario: Header guards
         Given header file with:
             """
             class Simple { };
             """
         When I generate a mock for class "Simple"
-        Then output should begin with "#ifndef SIMPLE_HPP\n#define SIMPLE_HPP"
-        And output should end with "#endif //SIMPLE_HPP"
+        Then output should begin with "#ifndef SIMPLEMOCK_HPP\n#define SIMPLEMOCK_HPP"
+        And output should end with "#endif /* SIMPLEMOCK_HPP */"
     
     Scenario: Header guards with namespaces
         Given header file with:
@@ -27,8 +27,8 @@ Feature: As a developer I want to automatically generate Mock Objects for classe
             } }
             """
         When I generate a mock for class "Abc::Def::Simple"
-        Then output should begin with "#ifndef ABC_DEF_SIMPLE_HPP\n#define ABC_DEF_SIMPLE_HPP"
-        And output should end with "#endif //ABC_DEF_SIMPLE_HPP"
+        Then output should begin with "#ifndef ABC_DEF_SIMPLEMOCK_HPP\n#define ABC_DEF_SIMPLEMOCK_HPP"
+        And output should end with "#endif /* ABC_DEF_SIMPLEMOCK_HPP */"
 
     Scenario: Unknown class
         Given header file with:
@@ -48,6 +48,7 @@ Feature: As a developer I want to automatically generate Mock Objects for classe
         When I generate a mock for class "C::B"
         Then it should fail with error containing "class C::B not found"
         
+    @done
     Scenario: void methods with no arguments
         Given header file with:
             """
@@ -67,6 +68,7 @@ Feature: As a developer I want to automatically generate Mock Objects for classe
             };
             """
             
+    @done
     Scenario: methods with no arguments
         Given header file with:
             """
@@ -80,8 +82,9 @@ Feature: As a developer I want to automatically generate Mock Objects for classe
         When I generate a mock for class "Simple"
         Then output should contain "MOCK_METHOD0(f, bool());"
         And output should contain "MOCK_METHOD0(g, int());"
-        And output should contain "MOCK_METHOD0(g, float());"
+        And output should contain "MOCK_METHOD0(h, float());"
 
+    @done
     Scenario: methods with arguments
         Given header file with:
             """
