@@ -1,6 +1,7 @@
 .*
 *~
-*/
+Debug+Asserts
+build
 configure.out
 !.gitignore
 !test

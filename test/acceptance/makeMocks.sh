@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CLANG_PATH=`readlink -f ../../../../../../Release+Asserts/bin`
-PLUGIN_PATH=`readlink -f ../../../../../../Release+Asserts/lib/libGoogleMockGen.so`
+CLANG_PATH=`readlink -f ../../../../../../Debug+Asserts/bin`
+PLUGIN_PATH=`readlink -f ../../../../../../Debug+Asserts/lib/libGoogleMockGen.so`
 export PATH="$PATH:$CLANG_PATH"
 
 function generateMock {
